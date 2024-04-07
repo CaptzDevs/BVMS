@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /bvms/
+
+# Route to the admin application
+RewriteCond %{REQUEST_URI} ^/bvms/admin [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /bvms/admin/index.php/$1 [L]
+
+# Route to the default application
+RewriteCond %{REQUEST_URI} !^/bvms/admin [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /bvms/index.php/$1 [L]
