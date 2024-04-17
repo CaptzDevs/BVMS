@@ -510,6 +510,7 @@
         $branch_name = $edit ? $productData['branch_name'] : '';
         $description = $edit ? $productData['description'] : '';
         $location = $edit ? $productData['branch_location'] : '';
+        $address = $edit ? $productData['branch_address'] : '';
         $image = $edit ? $productData['branch_image'] : '';
 
 
@@ -518,7 +519,7 @@
     <?php if($edit){ ?>
         <div class=" w-100 d-flex align-items-end justify-content-end p-3">
             <button type="button" id="openModalCCTV" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Add CCTV
+                Add CCTV 
             </button>
         </div>
     <?php } ?>
@@ -528,12 +529,13 @@
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content " >
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">CCTV</h5>
+            <h5 class="modal-title" id="exampleModalLabel">CCTV </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
+        <button id="checkAll" class=" float-right">Check/Uncheck All</button>
             <div class="table-responsive" id="tableData">
 	
 				</div>
@@ -586,7 +588,7 @@
 
 
                             <div class="row row-sm">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label">Location ( Latitude Longitude ) <span class="tx-danger"></span></label>
                                         <input class="form-control" placeholder="Latitude Longitude"
@@ -595,6 +597,18 @@
                                 </div>
 
                             </div>
+
+                            <div class="row row-sm">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label"> Address <span class="tx-danger"></span></label>
+                                        <input class="form-control" placeholder="Address"
+                                         id="branch_address" name="branch_address" value="<?= $address ?>" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+
 
                             <div class="row row-sm mb-3">
                                 <div class="col-md-12">

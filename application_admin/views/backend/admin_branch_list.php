@@ -326,8 +326,8 @@
 										<?php if (strlen($value['description']) > 11) { ?>
 											<div class="td-warper"><?= $value['description'] ?></div>
 											<div class="td-warper"><?= $value['branch_location'] ?></div>
-
-										<?php } ?>
+											<?php } ?>
+											<div class="td-warper"> No. of CCTV : <?= count($this->Dashboard_model->getCCTVBranchData($value['id'])); ?></div>
 
 
 										<!-- <div class="articleDetail ">

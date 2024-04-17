@@ -81,6 +81,7 @@
                 dataBSet.push({
                     branchid : dataset.branchid,
                     hostid : dataset.hostid,
+                    groupid : dataset.groupid,
                     type : dataset.type,
                 })
             })
@@ -90,6 +91,7 @@
                 dataBSet.push({
                     branchid : dataset.branchid,
                     hostid : dataset.hostid,
+                    groupid : dataset.groupid,
                     type : dataset.type,
                 })
             })
@@ -140,12 +142,11 @@
                 }
 
 
-          /*       $('tr').click(function(){
-                // Find the checkbox within the clicked TD
+                $('tr').click(function(){
+                    console.log('dd')
                 var checkbox = $(this).find('input[type="checkbox"]');
-                // Toggle its checked state
-                checkbox.prop('checked', !checkbox.prop('checked'));
-            }); */
+                checkbox.prop('checked', checkbox.prop('checked'));
+            });
               
 
             },
@@ -155,6 +156,8 @@
             }
         })
         })
+
+ 
 
         $("#model_id").change((e)=>{
 
@@ -499,12 +502,12 @@
                         title: 'บันทึกแล้ว',
                         confirmButtonText: 'ตกลง',
                     }).then((result) => {
-                     /*    if (result.isConfirmed) {
+                        if (result.isConfirmed) {
                             location.href = "<?= base_url("admin.php/Admin/Branch/") ?>" + response
                         }
                         setTimeout(() => {
                             location.href = "<?= base_url("admin.php/Admin/Branch/") ?>" + response
-                        }, 1000); */
+                        }, 1000);
                     })
                 } else {
 

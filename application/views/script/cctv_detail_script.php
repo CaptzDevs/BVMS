@@ -1,5 +1,7 @@
 <script>
     const BRANCH_ID = <?= $branchID ?>;
+    const CCTV_ID = <?= $typeID ?>;
+
 
     $(document).ready(function($) {
         "use strict";
@@ -149,7 +151,7 @@
 
         let tableCCTVReport; // Declare the DataTable variable
 
-        async function loadCCTVData(data, start, stop , load) {
+        async function loadCCTVData(data, start, stop) {
             let sess = await getSession();
 
             if (sess.id) {
@@ -157,15 +159,11 @@
         <a class="btn btn-outline-danger btn-sm m-1 px-3" href="<?= base_url('/admin.php/Admin/logout') ?>">
             ${sess.fname + " " + sess.lname } (Logout)
         </a>`);
-
-                if(load){
-
-                    $("#cctvData").html("Loading")
-                }
+                $("#cctvData").html("Loading")
 
 
                 return $.ajax({
-                    url: "<?= base_url('admin.php/Dashboard/CCTVIssueData/') ?>" + BRANCH_ID,
+                    url: "<?= base_url('admin.php/Dashboard/CCTVByID/') ?>" + CCTV_ID,
                     dataType: "json",
                     method: "GET",
                     cache: false,
@@ -176,7 +174,7 @@
                     success: async function(results) {
                         console.log(results)
                         data = data[0]
-
+/* 
                         $(".avaliable_http").text(results.avaliable_http)
                         $(".avaliable_https").text(results.avaliable_https)
 
@@ -188,21 +186,30 @@
 
                         $(".total").text(results.total.length)
                         $(".total_avaliable").text(results.avaliable_total)
-                        $(".total_issue").text(results.issue_http.length + results.issue_https.length)
+                        $(".total_issue").text(results.issue_http.length + results.issue_https.length) */
+
+           
+                        $(".host_id").text(`${results.total[0].hostid} `)
+                        $(".host_name").text(`${results.total[0].host} `)
+                        $(".ip").text(`${results.total[0].ip} `)
+
+                        $(".b_name").text(`${data.title} : ${results.total[0].host} `)
+
+                        $(".is_active").html( results.total[ results.total.length-1 ]['is_down'] == 1 ? `<span class="badge badge-danger p-2 font-weight-normal ts-shadow__sm">Down</span>` : `<span class="badge badge-primary p-2 font-weight-normal ts-shadow__sm">Active</span>`  ) 
+
 
                         let tableData = ""
-                        results.total.map((item) => {
+                        results.total.map((item,i) => {
                             tableData += `<tr>
-                         
-                            <td>${item.hostid}</td>
-                            <td >   <a href='<?= base_url() ?>/Dashboard/branch/${item.branchid}/cctv/${item.hostid}'> <u>${item.host}  </u>   </a></td>
-                            <td>${item.groupid === 23 ? "https" : "http"} </td>
-                            <td>${data.title}</td>
-                            <td>${item.ip}</td>
-                            <td>${item.is_cctv_active == 1 ? '<span class="text-success">Active</span>' : '<span class="text-danger">Issue</span>'} </td>
+                            <td>${i+1}</td>
+                            <td>${item.time}</td>
+                            <td>${item.is_down == 1 ? '<span class="text-danger">Issue</span>' : '<span class="text-success">Resolved</span>' } </td>
                         
                             </tr>`
                         })
+
+                        document.title = `Branch : ${data.title} | ${ results.total[0].host} | ${ results.total[0].ip}`
+
 
                         if (tableCCTVReport) {
                             console.log('df1')
@@ -227,7 +234,7 @@
                         var states = ['issue', 'show-all', 'active'];
                         var currentState = 0;
 
-                        tableCCTVReport.column(5).search('issue').draw();
+                        /* tableCCTVReport.column(5).search('issue').draw(); */
 
                         $("#toggle-filter").click((e) => {
                             var currentFilter = column.search();
@@ -275,20 +282,14 @@
                 window.location = "<?= base_url("admin.php/Admin/login") ?>"
             }
         }
-
-
-
         let dataBranch;
-        let startDate = 0
-        let endDate = 0
         async function main() {
             dataBranch = await loadData();
-            loadCCTVData(dataBranch,startDate,endDate ,true)
+            loadCCTVData(dataBranch, 0, 0)
 
-              setInterval(() => {
-                  loadCCTVData(dataBranch,startDate,endDate ,false)
-                  console.log(startDate,endDate)
-              }, 5000);
+            /*   setInterval(() => {
+                  loadCCTVData(data)
+              }, 5000); */
         }
 
         main();
@@ -312,8 +313,8 @@
         $(".btn-search-date").click(e => {
             console.log($("#datepicker-start").val())
             console.log($("#datepicker-end").val())
-             startDate = toUnix(formatDate($("#datepicker-start").val()))
-             endDate = toUnix(formatDate($("#datepicker-end").val()))
+            let startDate = toUnix(formatDate($("#datepicker-start").val()))
+            let endDate = toUnix(formatDate($("#datepicker-end").val()))
 
             console.log(startDate, endDate)
 
@@ -321,11 +322,13 @@
 
                 document.title = "Branch :" + dataBranch[0].title + " | " + $("#datepicker-start").val() + " - " + $("#datepicker-end").val();
 
-                loadCCTVData(dataBranch, startDate, endDate , true)
+                loadCCTVData(dataBranch, startDate, endDate)
             }
 
         })
 
 
     });
+
+
 </script>

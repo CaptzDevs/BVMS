@@ -91,7 +91,9 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= base_url('/Dashboard') ?>">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="<?= base_url('/Dashboard/Map') ?>">Map</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Branch</li>
+                            <li class="breadcrumb-item"><a href="<?= base_url('/Dashboard/branch/'.$branchID) ?>">branch </a></li>
+                            <li class="breadcrumb-item active" aria-current="page">CCTV : <?= $typeID ?></li>
+
                         </ol>
                     </nav>
                 </div>
@@ -107,7 +109,7 @@
 
                         <!--Title-->
                         <div class="ts-title mb-0">
-                            <h1 class="b_name">Branch Name</h1>
+                            <h1 class="b_name">Branch Name <span class="hostname"> </span></h1>
                             <h5 class="ts-opacity__90">
                                 <i class="fa fa-map-marker text-primary"></i>
                                 <span class="b_address"> Location </span>
@@ -115,7 +117,7 @@
                         </div>
 
                         <!--Price-->
-                        <h3>
+                        <h3 class="is_active">
                             <span class="badge badge-primary p-2 font-weight-normal ts-shadow__sm">Active</span>
                         </h3>
 
@@ -180,8 +182,8 @@
                         =============================================================================================-->
                         <div class="col-md-5 col-lg-4">
 
+                       
 
-                        
                             <!--ACTIONS
                         =============================================================================================-->
                           <!--   <section id="actions">
@@ -219,36 +221,12 @@
 
                                     <dl class="ts-description-list__line mb-0">
 
-                                        <dt>HTTP:</dt>
-                                        <dd> <span class="total_http">--</span> </dd>
-                                        <dt>HTTPS:</dt>
-                                        <dd> <span class="total_https">--</span> </dd>
-                                        <dt>Total CCTV:</dt>
-                                        <dd> <span class="total">--</span> </dd>
-
-                                        <hr>
-
-                                        <dt>Status:</dt>
-                                        <dd>Active</dd>
-
-                                        <dt>HTTP:</dt>
-                                        <dd> <span class="avaliable_http">--</span> / <span class="total_http">--</span> </dd>
-                                        <dt>HTTPS:</dt>
-                                        <dd> <span class="avaliable_https">--</span> / <span class="total_https">--</span> </dd>
-                                        <dt>Total CCTV:</dt>
-                                        <dd> <span class="total_avaliable">--</span> / <span class="total">--</span> </dd>
-
-                                        <hr>
-
-                                        <dt>Status:</dt>
-                                        <dd>Issue</dd>
-
-                                        <dt>HTTP:</dt>
-                                        <dd> <span class="issue_http">--</span> </dd>
-                                        <dt>HTTPS:</dt>
-                                        <dd> <span class="issue_https">--</span> </dd>
-                                        <dt>Total CCTV:</dt>
-                                        <dd> <span class="total_issue">--</span> </dd>
+                                        <dt>Host id:</dt>
+                                        <dd> <span class="host_id">--</span> </dd>
+                                        <dt>Host Name:</dt>
+                                        <dd> <span class="host_name">--</span> </dd>
+                                        <dt>IP</dt>
+                                        <dd> <span class="ip">--</span> </dd>
 
 
                                     </dl>
@@ -262,36 +240,7 @@
 
                             <!--LOCATION
                         =============================================================================================-->
-                            <section id="location">
-                                <h3>Location</h3>
-
-                                <div class="ts-box">
-
-                                    <dl class="ts-description-list__line mb-0">
-
-                                        <dt><i class="fa fa-map-marker ts-opacity__30 mr-2"></i>Address:</dt>
-                                        <dd class="border-bottom pb-2 b_address"> Addr </dd>
-
-                                        <dt><i class="fa fa-map-marker ts-opacity__30 mr-2"></i>Latitude:</dt>
-                                        <br>
-                                        <dd class="border-bottom pb-2 b_latitude"> 000 </dd>
-                                        <dt><i class="fa fa-map-marker ts-opacity__30 mr-2"></i>longtitude:</dt>
-                                        <br>
-                                        <dd class="border-bottom pb-2 b_longtitude">000</dd>
-
-
-                                        <!--        <dt><i class="fa fa-envelope ts-opacity__30 mr-2"></i>Email:</dt>
-                                        <dd class="border-bottom pb-2"><a href="#">hello@property.com</a></dd>
-
-                                        <dt><i class="fa fa-globe ts-opacity__30 mr-2"></i>Website:</dt>
-                                        <dd><a href="#">www.property.com</a></dd> -->
-
-                                    </dl>
-
-                                </div>
-
-                            </section>
-
+                          
 
                         </div>
                         <!--end col-md-4-->
@@ -299,6 +248,7 @@
                         <!--RIGHT SIDE
                         =============================================================================================-->
                         <div class="col-md-7 col-lg-8">
+
                         <section>
                                 <h3>Search</h3>
                                 <div class="ts-box">
@@ -337,90 +287,23 @@
 
                             <!--QUICK INFO
                             =========================================================================================-->
+                            <section class="overflow-hidden ">
+                            <h3>CCTV Data</h3>
+                                    <div class="ts-box">
 
-                            <section id="quick-info">
-                                <h3>CCTV Status</h3>
-
-
-                                <!--Quick Info-->
-                                <div class="ts-quick-info ts-box">
-
-                                    <div class="row no-gutters">
-                                        <div class="col-sm-4">
-                                            <div class="ts-quick-info__item text-success" data-bg-image="assets/img/icon-quick-info-shower.png">
-                                                <h6>Total Available</h6>
-                                                <figure class="total_avaliable"> -- </figure>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="ts-quick-info__item text-success" data-bg-image="assets/img/icon-quick-info-bed.png">
-                                                <h6>HTTP (Active)</h6>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <figure class="avaliable_http">--</figure>
-                                                    <!--  <figure >/</figure> 
-                                                    <figure class="total_http">--</figure> -->
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="ts-quick-info__item text-success" data-bg-image="assets/img/icon-quick-info-area.png">
-                                                <h6>HTTPS (Active)</h6>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <figure class="avaliable_https">--</figure>
-                                                    <!-- <figure >/</figure> 
-                                                    <figure class="total_https">--</figure> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-sm-6">
-                                            <div class="ts-quick-info__item text-danger" data-bg-image="assets/img/icon-quick-info-bed.png">
-                                                <h6>HTTP (Issue)</h6>
-                                                <figure class="issue_http">--</figure>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="ts-quick-info__item text-danger" data-bg-image="assets/img/icon-quick-info-area.png">
-                                                <h6> HTTPS (Issue)</h6>
-                                                <figure class="issue_https">--</figure>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12">
-                                            <div class="ts-quick-info__item text-danger" data-bg-image="assets/img/icon-quick-info-area.png">
-                                                <h6> Total (Issue)</h6>
-                                                <figure class="total_issue">--</figure>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                            </section>
-
-                            <section class="overflow-hidden">
-                                    <div class=" w-100 d-flex justify-content-end ">
-                                    <button id="toggle-filter" class="border border-bottom-1" data-state="0"> Status: Issue </button>
-                                    </div>
-                                   <!--  <span style="font-size: 1.2rem;">CCTV List</span> -->
-                                    <table id="cctvReport" class="display no-wrap" style="width:100%">
+                                      
+                                        <!--  <span style="font-size: 1.2rem;">CCTV List</span> -->
+                                        <table id="cctvReport" class="display no-wrap" style="width:100%">
                                         <thead>
-                                        <tr>
-                                            <th>Host ID</th>
-                                            <th>Host</th>
-                                            <th>Type</th>
-                                            <th>Branch Name</th>
-                                            <th>IP</th>
+                                            <tr>
+                                            <th>#</th>
+                                            <th>Time</th>
                                             <th>Status</th>
-
 
                                         </tr>
                                     </thead>
                                     <tbody id="cctvData">
-
+                                        
                                     </tbody>
                                     <!--   <tfoot>
                                         <tr>
@@ -432,36 +315,13 @@
                                         </tr>
                                     </tfoot> -->
                                 </table>
+                            </div>
                             </section>
 
 
                             <!--MAP
                             =========================================================================================-->
-                            <section id="map-location">
-                                <div class="ts-box">
-
-                                    <h3>Map</h3>
-                                    <div class="ts-map ts-map__detail ts-border-radius__sm ts-shadow__sm" id="ts-map-simple" data-ts-map-leaflet-provider="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png" data-ts-map-zoom="12" data-ts-map-center-latitude="40.702411" data-ts-map-center-longitude="-73.556842" data-ts-map-scroll-wheel="0" data-ts-map-controls="0"></div>
-                                </div>
-                            </section>
-
-                            <!--DESCRIPTION
-                            =========================================================================================-->
-                            <section id="description" class="ts-box">
-
-                                <h3>Description</h3>
-
-                                <p class="b_description">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dictum ac augue et suscipit.
-                                    Vivamus ac tellus ut massa bibendum aliquam vitae ac diam. Aenean in enim volutpat,
-                                    accumsan erat non, porta massa. Nulla ac porta orci. Quisque condimentum fermentum
-                                    isl, lacinia tempor erat venenatis non. Integer ut malesuada est, nec pulvinar magna.
-                                    Vestibulum tincidunt malesuada mi eget mattis. Phasellus quis purus porta, auctor dolor
-                                    sed, eleifend tortor. Vestibulum placerat tristique turpis, eu suscipit nulla elementum
-                                    porttitor. Duis eu varius libero.
-                                </p>
-
-                            </section>
+                     
 
                             <!--FEATURES
                             =========================================================================================-->

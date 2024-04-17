@@ -69,13 +69,15 @@ class Admin extends CI_Controller
 	}
 
 
-	public function Branch($id = NULL){
+	public function Branch($id = 0){
 
 		$this->check_login();
 
 		$data['edit'] = 0;
+		$data["product_id"] = $id;
+		$data['checkedData'] = json_encode("[]");
 
-		if(isset($id)){
+		if($id > 0 ){
 			$data['edit'] = 1;
 			$data["product_id"] = $id;
 

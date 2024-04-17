@@ -107,6 +107,16 @@ class Control extends CI_Controller
 
 	}
 
+	public function getCCTVTotalHistory(){
+		$date = isset($_GET['date'] ) ? $_GET['date']  : date('Y-m-d'); 
+		$nDate = isset($_GET['ndate'] ) ? $_GET['ndate']  : 5; 
+
+		$cctvData = $this->Dashboard_model->getCCTVTotalHistory($date,$nDate);
+
+		echo json_encode($cctvData);
+
+	}
+
 	public function getSession(){
         print_r(json_encode($_SESSION));
 	}
@@ -140,11 +150,9 @@ class Control extends CI_Controller
 			$latitude = '0';
 			$longitude = '0';
 
-
-			if(count($locations) > 0){
+			if(count($locations) > 1){
 				$latitude = $locations[0];
 				$longitude = $locations[1];
-			}
 				
 			$data = array(
 				"id" => $value['id'],
@@ -153,7 +161,8 @@ class Control extends CI_Controller
 				"category" => 1,
 				"marker_image" => base_url('/uploads/image/'.$value['branch_image']),
 				"url"=> base_url('/Dashboard/branch/'. $value['id']) ,
-				"address"=> "ระยอง",
+				"address"=> $value['branch_address'],
+				"description"=> $value['description'],
 				"latitude"=> $latitude,
 				"longitude"=> $longitude,
 				"ribbon"=> "<i class='fa fa-thumbs-up'></i>",
@@ -168,6 +177,8 @@ class Control extends CI_Controller
 
 
 			array_push($mapData ,$data);
+		}
+
 		};
 
 		print_r( json_encode($mapData));
@@ -1239,6 +1250,8 @@ class Control extends CI_Controller
 		$data["branch_name"] = $this->input->post("branch_name");
 		$data["description"] = $this->input->post("description");
 		$data["branch_location"] = $this->input->post("branch_location");
+		$data["branch_address"] = $this->input->post("branch_address");
+
 
 
 		$id = $data['id'];

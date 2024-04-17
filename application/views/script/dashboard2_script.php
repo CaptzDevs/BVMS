@@ -153,7 +153,7 @@
                     '<a href="#" class="ts-marker" data-ts-id="' + loadedMarkersData[i]["id"] + '" data-ts-ln="' + i + '">' +
                     ((loadedMarkersData[i]["ribbon"] !== undefined) ? '<div class="ts-marker__feature">' + loadedMarkersData[i]["ribbon"] + '</div>' : "") +
                     ((loadedMarkersData[i]["title"] !== undefined) ? '<div class="ts-marker__title">' + loadedMarkersData[i]["title"] + '</div>' : "") +
-                    ((loadedMarkersData[i]["price"] !== undefined && loadedMarkersData[i]["price"] > 0) ? '<div class="ts-marker__info">' + formatPrice(loadedMarkersData[i]["price"]) + '</div>' : "") +
+                    /* ((loadedMarkersData[i]["price"] !== undefined && loadedMarkersData[i]["price"] > 0) ? '<div class="ts-marker__info">' + formatPrice(loadedMarkersData[i]["price"]) + '</div>' : "") + */
                     ((loadedMarkersData[i]["marker_image"] !== undefined) ? '<div class="ts-marker__image ts-black-gradient" style="background-image: url(' + loadedMarkersData[i]["marker_image"] + ')"></div>' : '<div class="ts-marker__image ts-black-gradient" style="background-image: url(assets/img/marker-default-img.png)"></div>') +
                     '</a>' +
                     '</div>';
@@ -289,51 +289,15 @@
                 $(".sidebar-content").html(`    <div class="sidebar-banner ">
                     <img  src="${branchData.marker_image}" alt="">
                 </div>
+                
                 <div class="content px-3 flex flex-column gap-3 py-1"> 
                     <h3> Overview </h3>
                     <span> <span class="opacity-50"> Branch </span> : ${branchData.title} </span> <br>
                   
-                    <ul>
-                        <li class="text-red" >Total       : 350</li>
-                        <li class="text-red" >Available   : 100</li>
-                        <li class="text-red" >Down        : 3</li>
-                    </ul>
-                    <hr>
-                </div>
-
-                <div class="content px-3 flex flex-column gap-3 py-1"> 
-                    <h3> List </h3>
-                    
-                    <table class="w-100">
-                        <thead>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>CCTV 1</td>
-                                <td class="text-success">Available</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>CCTV 2</td>
-                                <td class="text-success">Available</td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>CCTV 3</td>
-                                <td class="text-danger">Down</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                        
-                            <a  class="w-100 py-3" href="">More...</a>
+              
                     <hr>
 
-                    <a href="" class="btn-next">
+                    <a href="<?= base_url("/Dashboard/Branch/") ?>${branchData.id}" class="btn-next">
                             See More Detail for this branch
                     </a>
 
@@ -370,7 +334,7 @@
             infoboxHtml.innerHTML =
                 '<div class="infobox-wrapper">' +
                 '<div class="ts-infobox" data-ts-id="' + loadedMarkersData[i]["id"] + '">' +
-                '<img src="assets/img/infobox-close.svg" class="ts-close">' +
+                '<img src="https://static.thenounproject.com/png/100498-200.png" width="30px" class="bg-white rounded-50 ts-close">' +
 
                 ((loadedMarkersData[i]["ribbon"] !== undefined) ? '<div class="ts-ribbon">' + loadedMarkersData[i]["ribbon"] + '</div>' : "") +
                 ((loadedMarkersData[i]["ribbon_corner"] !== undefined) ? '<div class="ts-ribbon-corner"><span>' + loadedMarkersData[i]["ribbon_corner"] + '</span></div>' : "") +
@@ -379,7 +343,7 @@
                 ((loadedMarkersData[i]["badge"] !== undefined && loadedMarkersData[i]["badge"].length > 0) ? '<div class="badge badge-dark">' + loadedMarkersData[i]["badge"] + '</div>' : "") +
                 '<div class="ts-infobox__content">' +
                 '<figure class="ts-item__info">' +
-                ((loadedMarkersData[i]["price"] !== undefined && loadedMarkersData[i]["price"] > 0) ? '<div class="ts-item__info-badge">' + formatPrice(loadedMarkersData[i]["price"]) + '</div>' : "") +
+               /*  ((loadedMarkersData[i]["price"] !== undefined && loadedMarkersData[i]["price"] > 0) ? '<div class="ts-item__info-badge">' + formatPrice(loadedMarkersData[i]["price"]) + '</div>' : "") + */
                 ((loadedMarkersData[i]["title"] !== undefined && loadedMarkersData[i]["title"].length > 0) ? '<h4>' + loadedMarkersData[i]["title"] + '</h4>' : "") +
                 ((loadedMarkersData[i]["address"] !== undefined && loadedMarkersData[i]["address"].length > 0) ? '<aside><i class="fa fa-map-marker mr-2"></i>' + loadedMarkersData[i]["address"] + '</aside>' : "") +
                 '</figure>' +

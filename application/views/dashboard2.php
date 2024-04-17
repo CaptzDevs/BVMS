@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="ThemeStarz">
-
     <!--CSS -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/font-awesome/css/fontawesome-all.min.css">
@@ -93,6 +91,12 @@
     .collapse{
         font-size: .8rem;
     }
+    .navbar-collapse.collapse.show{
+        background: #ffffff;
+    }
+    .navbar-nav {
+        background: #ffffff;
+    }
 </style>
 <div class="ts-page-wrapper ts-homepage" id="page-top">
 <?php 
@@ -107,7 +111,7 @@
         =============================================================================================================-->
         <!--PRIMARY NAVIGATION
         =============================================================================================================-->
-        <nav id="ts-primary-navigation" class="navbar navbar-expand-md navbar-light">
+        <nav id="ts-primary-navigation" class="navbar navbar-expand-md navbar-light" style="height: 60px;">
             <div class="container">
 
                 <!--Brand Logo-->
@@ -139,6 +143,9 @@
     ?>
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url('/admin.php/Admin/Branchs') ?>"> Branch List</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('/admin.php/Admin/Branchs') ?>"> CCTV</a>
     </li>
 
     <!--REGISTER (Main level)
@@ -185,14 +192,13 @@
                      data-ts-map-zoom-position="topleft"
                      data-ts-map-scroll-wheel="1"
                      data-ts-map-zoom="12"
-                     data-ts-map-center-latitude="7.0129342"
-                     data-ts-map-center-longitude="100.4669778"
+                     data-ts-map-center-latitude="12.717240206878225"
+                     data-ts-map-center-longitude="101.19523854852562"
                      data-ts-locale="th-TH"
                      data-ts-currency="THB"
                      data-ts-unit="m<sup>2</sup>"
-                     data-ts-display-additional-info="total_Total;available_Available;down_Down"
+                     data-ts-display-additional-info="total_Total;"
                   
-
                 >
                 </div>
             </div>
@@ -345,8 +351,6 @@
 <script src="<?= base_url() ?>assets/js/leaflet.js"></script>
 <script src="<?= base_url() ?>assets/js/leaflet.markercluster.js"></script>
 <script src="<?= base_url() ?>assets/js/custom.js"></script>
-<!-- <script src="<?= base_url() ?>assets/js/map-leaflet.js"></script> -->
-<!-- <script src="<?= base_url() ?>assets/js/fa_all.min.js"></script> -->
 
 
 <script>
