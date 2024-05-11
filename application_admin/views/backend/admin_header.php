@@ -147,7 +147,8 @@
 					<!--Nav-->
 					<nav class="horizontalMenu clearfix">
 						<ul class="horizontalMenu-list">
-						<li aria-haspopup="true"><a href="<?= base_url("Dashboard") ?>" class="sub-icon"><i class="hor-icon" data-eva="file-text-outline"></i> Dashboard</a></li>
+							<li aria-haspopup="true"><a href="<?= base_url("admin.php/DashboardView/Map") ?>" class="sub-icon"><i class="hor-icon" data-eva="file-text-outline"></i> Map</a></li>
+						<li aria-haspopup="true"><a href="<?= base_url("admin.php/DashboardView") ?>" class="sub-icon"><i class="hor-icon" data-eva="file-text-outline"></i> Dashboard</a></li>
 
 							<?php if($_SESSION['role'] == '0'){?>
                             <li aria-haspopup="true"><a href="<?= base_url("admin.php/Admin/AdminList") ?>" class="sub-icon"><i class="hor-icon" data-eva="monitor-outline"></i> Admin <i class="fe fe-chevron-down horizontal-icon"></i></a>

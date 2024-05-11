@@ -26,6 +26,7 @@ class Control extends CI_Controller
 		mailsender = mailsender@bangkokhatyaihealth.com 
 	*/
 
+
 	public function _sendMailAdmin($appointmentData, $type = 'appointment')
 	{
 
@@ -146,27 +147,29 @@ class Control extends CI_Controller
 		$mapData = array();
 
 		foreach( $branchData  as $value) {
-			$locations = explode( ',', $value['branch_location'] );
-			$latitude = '0';
-			$longitude = '0';
+			if($value['data_status'] == '1'){
 
-			if(count($locations) > 1){
-				$latitude = $locations[0];
-				$longitude = $locations[1];
+				$locations = explode( ',', $value['branch_location'] );
+				$latitude = '0';
+				$longitude = '0';
 				
-			$data = array(
+				if(count($locations) > 1){
+					$latitude = $locations[0];
+					$longitude = $locations[1];
+					
+					$data = array(
 				"id" => $value['id'],
 				"title" => $value['branch_name'],
 				"price" => 100,
 				"category" => 1,
 				"marker_image" => base_url('/uploads/image/'.$value['branch_image']),
-				"url"=> base_url('/Dashboard/branch/'. $value['id']) ,
+				"url"=> base_url('/admin.php/DashboardView/branch/'. $value['id']) ,
 				"address"=> $value['branch_address'],
 				"description"=> $value['description'],
 				"latitude"=> $latitude,
 				"longitude"=> $longitude,
 				"ribbon"=> "<i class='fa fa-thumbs-up'></i>",
-				"total"=> 356,
+				"total"=> '-',
 				"available"=> 2,
 				"down"=> 1,
 				"http"=> 100,
@@ -178,7 +181,8 @@ class Control extends CI_Controller
 
 			array_push($mapData ,$data);
 		}
-
+		
+	}
 		};
 
 		print_r( json_encode($mapData));
@@ -274,38 +278,6 @@ class Control extends CI_Controller
 	}
 
 
-	public function saveSeries()
-	{
-		$data['series_name'] = $this->input->post('series_name');
-		$data['model_id'] = $this->input->post('model_id');
-
-		$data['create_date'] = date('Y-m-d H:i:s');
-
-
-		$insert_id = $this->Control_model->save_data('series', $data);
-
-		if ($insert_id) {
-			echo $this->getSeriesList(	$data['model_id'] );
-		} else {
-			echo 0;
-		}
-	}
-
-	public function editSeries()
-	{
-
-		$data['id'] = $this->input->post('id');
-		$data['model_id'] = $this->input->post('model_id');
-		$data['series_name'] = $this->input->post('series_name');
-
-		$isEdit = $this->Control_model->edit_data('series', $data);
-
-		if ($isEdit) {
-			echo $this->getSeriesList(	$data['model_id'] );
-		} else {
-			echo 0;
-		}
-	}
 
 	public function editSeriesDetail()
 	{
@@ -477,13 +449,7 @@ class Control extends CI_Controller
 		echo $this->getModelList("", $data['searchModel']);
 	}
 
-	public function searchSeries()
-	{
-		$data['searchSeries'] = $this->input->post('searchSeries');
-		$data['model_id'] = $this->input->post('model_id');
-
-		echo $this->getSeriesList($data['model_id'], "", $data['searchSeries']);
-	}
+	
 
 	public function getSeriesByModelID(){
 		print_r( json_encode($this->Control_model->get_series($this->input->post('model_id'))->result_array()));
@@ -829,341 +795,6 @@ class Control extends CI_Controller
 
 
 
-	public function getSeriesList($m_id = NULL, $s_id = NULL, $seriesSearch = NULL)
-	{
-		/* $cate_id = $this->input->post('category_id'); */
-		if ($m_id == NULL) {
-			$m_id = "";
-		}
-		if ($s_id == NULL) {
-			$s_id = "";
-		}
-		if ($seriesSearch == NULL) {
-			$seriesSearch = "";
-		}
-
-		$categoryListData = $this->Control_model->get_seriesListAll($m_id, $s_id, $seriesSearch)->result_array();
-
-	?>
-		<div id="list_data">
-			<ul class="list-group sortable">
-				<?php if (count(($categoryListData)) > 0) { ?>
-					<?php foreach ($categoryListData as $value) { ?>
-						<li class="d-flex list-group-item align-items-center justify-content-between reorder-item" style="gap: 10px;" id="<?= $value['id'] ?>">
-							<!-- -->
-							<div class=" reorder-item"> <i class="fa-solid fa-up-down"></i> </div>
-
-							<input class="category-name d-none" type="text" id="category-name-<?= $value['id'] ?>" data-id="<?= $value['id'] ?>" value="<?= $value['series_name'] ?>">
-
-							<a class="category-name-link" id="category-name-link-<?= $value['id'] ?>" style="width: 90%;" href="<?= base_url('/Admin/Series/').$value["model_id"] .'/'. $value['id'] ?>">
-								<?= $value['series_name'] ?>
-							</a>
-							<!-- <span class="badgetext badge badge-primary badge-pill"><?= $value['countArticle'] ?> </span> -->
-
-							<?php
-							$toggleClassHide = 'hide-data';
-
-							if ($value['data_status'] == '0') {
-								$toggleClassHide = 'show-data';
-							} ?>
-
-
-							<button class="badgetext badge badge-success badge-pill btn-category-edit" data-id="<?= $value['id'] ?>"><i class="fas fa-pen"></i></button>
-							<button data-id="<?= $value['id'] ?>" class="badgetext badge badge-info badge-pill btn-hideData <?= $toggleClassHide ?>">
-								<i class="typcn typcn-eye"></i>
-							</button>
-							<?php if (0) { ?>
-								<button class="badgetext badge badge-secondary badge-pill" style="cursor:no-drop" disabled><i class="fas fa-trash"></i></button>
-							<?php } else { ?>
-								<button class="badgetext badge badge-danger badge-pill btn-category-delete" data-id="<?= $value['id'] ?>"><i class="fas fa-trash"></i></button>
-							<?php } ?>
-
-						</li>
-					<?php } ?>
-				<?php } else { ?>
-					<li class="d-flex  list-group-item align-items-center justify-content-between">
-						สร้าง<input id="new_category_name" name="new_category_name" readonly value="<?= $seriesSearch ?>" type="text" placeholder="Create New Series">
-						<button class="badgetext badge badge-primary badge-pill" id="btn_create_new_category">Create</button>
-					</li>
-				<?php } ?>
-			</ul>
-		</div>
-
-
-		<script>
-			$(document).ready(function() {
-				// Make the list items sortable
-				$(".sortable").sortable({
-					handle: ".reorder-item",
-					update: function(event, ui) {
-						// Update the order of items after sorting
-						var order = $(this).sortable('toArray', {
-							attribute: 'id'
-						});
-						console.log(order)
-
-						let dataOrder = []
-
-						order.map((item, i) => {
-							let dataSet = {
-								id: item,
-								data_order: i,
-							}
-
-							dataOrder.push(dataSet);
-						})
-
-						updateRowOrder(dataOrder)
-
-					}
-				});
-
-				// Prevent clicks on buttons from triggering the sorting
-				$(".sortable button").on("click", function(e) {
-					e.stopPropagation();
-				});
-			});
-
-
-			articleLists = <?= count(($categoryListData)) ?>;
-
-			function updateRowOrder(dataRowUpdate) {
-
-				let jsonData = JSON.stringify(dataRowUpdate);
-
-				console.log('d')
-
-				return $.ajax({
-					url: '<?= base_url("/Control/updateSeriesRowOrder") ?>',
-					type: 'POST',
-					contentType: 'application/json',
-					data: jsonData,
-					success: function(response, status) {
-						/* console.log(response, status); */
-						if (response) {
-							$.toast({
-								heading: 'บันทึกข้อมูลสำเร็จ',
-								icon: 'success',
-								showHideTransition: 'slide',
-								allowToastClose: true,
-								hideAfter: 3000,
-								stack: 5,
-								position: 'bottom-left',
-								textAlign: 'left',
-								loader: true,
-								loaderBg: '#ffff',
-
-							});
-						}
-
-					},
-					error: function(xhr, status, error) {
-						// Handle errors here
-						console.error('AJAX error:', error);
-					}
-				});
-
-			}
-
-
-			function hideDataStatus(id) {
-				var url = `<?= base_url('/Control/hideData') ?>`;
-
-				var postData = {
-					id: id,
-					table: "series",
-				};
-
-				return $.ajax({
-					type: "POST",
-					url: url,
-					data: postData,
-					success: function(response) {
-
-						if (response) {
-							$.toast({
-								heading: 'ซ่อนข้อมูลสำเร็จ',
-								icon: 'success',
-								showHideTransition: 'slide',
-								allowToastClose: true,
-								hideAfter: 3000,
-								stack: 5,
-								position: 'bottom-left',
-								textAlign: 'left',
-								loader: true,
-								loaderBg: '#9EC600',
-
-							});
-						}
-					},
-					error: function(xhr, status, error) {
-						console.error("Error occurred:", status, error);
-					}
-				});
-			}
-
-
-			function showDataStatus(id) {
-				var url = `<?= base_url('/Control/showData') ?>`;
-
-				var postData = {
-					id: id,
-					table: "series",
-				};
-
-				return $.ajax({
-					type: "POST",
-					url: url,
-					data: postData,
-					success: function(response) {
-
-						if (response) {
-							$.toast({
-								heading: 'เลิกซ่อนข้อมูลสำเร็จ',
-								icon: 'success',
-								showHideTransition: 'slide',
-								allowToastClose: true,
-								hideAfter: 3000,
-								stack: 5,
-								position: 'bottom-left',
-								textAlign: 'left',
-								loader: true,
-								loaderBg: '#9EC600',
-
-							});
-						}
-					},
-					error: function(xhr, status, error) {
-						console.error("Error occurred:", status, error);
-					}
-				});
-			}
-
-
-			$(".btn-hideData").click(async (e) => {
-
-				if (e.target.className.includes("show-data")) {
-					await showDataStatus(e.target.dataset.id);
-					e.target.classList.add('hide-data');
-					e.target.classList.remove('show-data');
-				} else if (e.target.className.includes("hide-data")) {
-					await hideDataStatus(e.target.dataset.id);
-					e.target.classList.remove('hide-data');
-					e.target.classList.add('show-data');
-
-				}
-
-			})
-
-
-			$(".btn-category-edit").click((e) => {
-				console.log(e.target.dataset.id)
-				console.log($(`#category-name-18`))
-
-				$(`#category-name-${e.target.dataset.id}`).removeClass("d-none")
-				$(`.category-name-link#category-name-link-${e.target.dataset.id}`).addClass("d-none")
-				$(`#category-name-${e.target.dataset.id}`).focus()
-				$(`#category-name-${e.target.dataset.id}`)[0].setSelectionRange($(`.category-name-${e.target.dataset.id}`)[0].value.length, $(`.category-name-${e.target.dataset.id}`)[0].value.length);
-			})
-
-			$('#category_search').off('keyup');
-
-			$('#category_search').keyup((e) => {
-
-
-				/* 	$("#list_data").html(`<div style="display: flex; align-items: center; justify-content:center;">
-						<img src="https://bangkokhatyaihealth.com/article/assets/img/loader1.svg " class="loader-img" alt="Loader">
-						</div>`) */
-
-				$("#new_category_name").val(e.target.value)
-				clearInterval(timeOut);
-				timeOut = setTimeout(() => {
-					sendSearchRequest($('#category_search').val());
-				}, 250)
-
-			});
-
-			$('#category_search').keydown((e) => {
-				clearInterval(timeOut);
-			});
-
-
-			$("#new_category_name").keydown(e => {
-				if (e.keyCode == 13) {
-					sendPostRequest();
-				}
-			})
-
-			$(".category-name").change(e => {
-				$(`#category-name-${e.target.dataset.id}`).addClass("d-none")
-				$(`.category-name-link#${e.target.dataset.id}`).removeClass("d-none")
-
-				sendEditRequest(e.target.dataset.id);
-			})
-
-
-			$(".category-name").blur(e => {
-				$(`.category-name`).addClass("d-none")
-				$(`.category-name-link`).removeClass("d-none")
-
-
-				/* sendEditRequest(e.target.id); */
-			})
-
-
-			$('#btn_create_new_category').click((e) => {
-				if ($("#new_category_name").val().length > 0) {
-					$(e.target).prop("disabled", true);
-					$('#category_search').val('')
-					sendPostRequest();
-				}
-			})
-
-			$('.btn-category-delete').click((e) => {
-				Swal.fire({
-					icon: 'warning',
-					title: 'ต้องการลบหมวดหมู่นี้ใช่หรือไม่',
-					showDenyButton: true,
-					confirmButtonText: 'ลบ',
-					denyButtonText: `ยกเลิก`,
-					denyButtonColor: '#228be6',
-					confirmButtonColor: '#e03131',
-
-				}).then((result) => {
-					if (result.isConfirmed) {
-
-						$(e.target).prop("disabled", true);
-						$(`li#${e.target.dataset.id}`).fadeOut('.5', () => {
-							$(`li#${e.target.dataset.id}`).remove()
-
-							console.log($("#list_data li").length)
-							if ($("#list_data li").length == 0) {
-								$('#list_data').append(`<li class="d-flex  list-group-item align-items-center justify-content-between">
-								<input id="new_category_name" name="new_category_name" value="${$("#category_search").val()}" type="text" placeholder="Create New Series">
-								<button class="badgetext badge badge-primary badge-pill" id="btn_create_new_category">Create</button>
-							</li>`)
-
-								$('#btn_create_new_category').click((e) => {
-									if ($("#new_category_name").val().length > 0) {
-
-										$(e.target).prop("disabled", true);
-										sendPostRequest();
-									}
-								})
-							}
-						})
-
-						sendDeleteRequest(e.target.dataset.id);
-
-					}
-				})
-
-
-			})
-		</script>
-
-<?php
-	}
 
 	public function saveData()
 	{
@@ -1265,56 +896,8 @@ class Control extends CI_Controller
 		}
 	}
 
-	public function editSlide()
-	{
-		$this->load->helper("security");
-
-		$data = array();
-
-		$data["id"] = $this->input->post("id");
-
-		$data["slide_name"] = $this->input->post("slide_name");
-		$data["slide_name_eng"] = $this->input->post("slide_name_eng");
-
-		$data["description"] = $this->input->post("description");
-		$data["description_eng"] = $this->input->post("description_eng");
-		$data["shopee_link"] = $this->input->post("shopee_link");
-		$data["learnmore_link"] = $this->input->post("learnmore_link");
 
 
-		$id = $data['id'];
-
-		$isUpdate =  $this->Control_model->update('tbl_slide', 'id', $id, $data);
-
-		if ($isUpdate) {
-			echo $id;
-		} else {
-			echo 0;
-		}
-	}
-
-	public function editReview()
-	{
-		$this->load->helper("security");
-
-		$data = array();
-
-		$data["id"] = $this->input->post("id");
-		$data["review_name_eng"] = $this->input->post("review_name_eng");
-		$data["description"] = $this->input->post("description");
-		$data["description_eng"] = $this->input->post("description_eng");
-		$data["youtube_link"] = $this->input->post("youtube_link");
-
-		$id = $data['id'];
-
-		$isUpdate =  $this->Control_model->update('tbl_review', 'id', $id, $data);
-
-		if ($isUpdate) {
-			echo $id;
-		} else {
-			echo 0;
-		}
-	}
 	/* ------------------------------------------- */
 
 	public function saveUserDetail()
@@ -1350,20 +933,6 @@ class Control extends CI_Controller
 	}
 	/* ------------------------------------------- */
 
-	public function cancelAppointment()
-	{
-		$appointmentData = $this->Control_model->get_Appointment('', $this->input->post('app_id'));
-		$isCancel =  $this->Control_model->update('tbl_appointment', 'id', $this->input->post('app_id'), array('data_status' => '0'));
-
-		if ($isCancel) {
-			echo 1;
-
-			/* $this->sendMailAdmin($appointmentData, 'cancel'); */
-			$this->sendMailUser($appointmentData, 'cancel');
-		} else {
-			echo json_encode(array('error' => 'ไม่สามารถยกเลิกนัดได้'));
-		}
-	}
 
 	/* ------------------------------------------- */
 
@@ -1380,27 +949,7 @@ class Control extends CI_Controller
 
 	/* ------------------------------------------- */
 
-	public function updateAppointmentStatus()
-	{
-		if ($_SESSION['role'] != '2') {
 
-			$dataUpdate = array(
-				'appointment_status' => $this->input->post('appointment_status'),
-				'admin_update' => $_SESSION['id'],
-				"admin_update_date" => date('Y-m-d H:i:s'),
-			);
-
-			$isDone =  $this->Control_model->update('tbl_appointment', 'id', $this->input->post('app_id'), $dataUpdate);
-
-			if ($isDone) {
-				echo 1;
-			} else {
-				echo json_encode(array('error' => 'ไม่สามารถเปลี่ยนสถานะได้'));
-			}
-		} else {
-			echo json_encode(array('error' => 'คุณไม่มีสิทธิ์เข้าถึงฟังก์ชั่นนี้'));
-		}
-	}
 
 	/* ------------------------------------------- */
 
@@ -1424,104 +973,7 @@ class Control extends CI_Controller
 		}
 	}
 
-	/* ------------------------------------------- */
 
-	public function getQueue($date = NULL)
-	{
-
-		return json_encode($this->control->get_queue());
-	}
-
-
-	public function uploadSeriesImage()
-	{
-
-		$config['upload_path']    = './uploads/image';
-		$config['allowed_types'] = 'jpg|png|webp|gif';
-		$config['encrypt_name']   = TRUE;
-		$config['max_size'] = 0;
-
-
-		$this->load->library('upload', $config);
-
-		$this->upload->initialize($config);
-
-		$uploadedFiles = array();
-		foreach ($_FILES as $fieldName => $file) {
-			if ($this->upload->do_upload($fieldName)) {
-
-				$fileData = $this->upload->data();
-
-				$imageData = array();
-
-				$imageData['series_image'] = $fileData['file_name'];
-				$imageData['id'] = $_POST['id'];
-
-				$save =  $this->Control_model->addSeriesImage($imageData);
-
-				$fileUrl = base_url('uploads/image' . $fileData['file_name']);
-
-				$uploadedFiles[$fieldName] = array(
-					'id' => $_POST['id'],
-					'url' => $fileUrl,
-					'result' => $save,
-				);
-			} else {
-				$error = $this->upload->display_errors();
-				$uploadedFiles[$fieldName] = array(
-					'error' => $error
-				);
-			}
-		}
-
-		echo json_encode($uploadedFiles);
-	}
-
-	public function uploadSlideImage()
-	{
-
-		$config['upload_path']    = './uploads/image';
-		$config['allowed_types'] = 'jpg|png|webp|gif';
-		$config['encrypt_name']   = TRUE;
-		$config['max_size'] = 0;
-
-
-		$this->load->library('upload', $config);
-
-		$this->upload->initialize($config);
-
-		$uploadedFiles = array();
-		foreach ($_FILES as $fieldName => $file) {
-			if ($this->upload->do_upload($fieldName)) {
-
-				/* $this->Control_model->setAllImageMainToNone($_POST['ref_id']); */
-
-				$fileData = $this->upload->data();
-
-				$imageData = array();
-
-				$imageData['image_url'] = $fileData['file_name'];
-				$imageData['id'] = $_POST['id'];
-
-				$save =  $this->Control_model->addSlideImage($imageData);
-
-				$fileUrl = base_url('uploads/image' . $fileData['file_name']);
-
-				$uploadedFiles[$fieldName] = array(
-					'id' => $_POST['id'],
-					'url' => $fileUrl,
-					'result' => $save,
-				);
-			} else {
-				$error = $this->upload->display_errors();
-				$uploadedFiles[$fieldName] = array(
-					'error' => $error
-				);
-			}
-		}
-
-		echo json_encode($uploadedFiles);
-	}
 
 
 

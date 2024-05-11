@@ -167,8 +167,9 @@ class Dashboard_model extends CI_Model
     public function getCCTVIssue($branchID = null)
     {
 
-        $startDate = $_GET['startDate'];
-        $endDate = $_GET['endDate'];
+        $startDate = isset($_GET['startDate']) ? $_GET['startDate'] : 0;
+        $endDate = isset($_GET['endDate']) ? $_GET['endDate'] : 0;
+
 
         $whereDate = '';
         if ($startDate != 0 && $endDate != 0) {

@@ -289,6 +289,7 @@ class Control_model extends CI_Model {
         if($id != NULL){
             $this->db->where('id',$id);
         }
+
         $data = $this->db->get("tbl_branch");
 
         return $data;

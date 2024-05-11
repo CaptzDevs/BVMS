@@ -336,11 +336,11 @@
 
 
     function hideData(id) {
-        var url = `<?= base_url('/Control/hideData') ?>`;
+        var url = `<?= base_url('admin.php/Control/hideData') ?>`;
 
         var postData = {
             id: id,
-            table: "product",
+            table: "branch",
         };
 
         return $.ajax({
@@ -374,11 +374,11 @@
 
 
     function showData(id) {
-        var url = `<?= base_url('/Control/showData') ?>`;
+        var url = `<?= base_url('admin.php/Control/showData') ?>`;
 
         var postData = {
             id: id,
-            table: "product",
+            table: "branch",
         };
 
         return $.ajax({
