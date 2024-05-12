@@ -134,7 +134,7 @@
 
                 markerContent.innerHTML =
                     '<div class="ts-marker-wrapper">' +
-                    '<a href="#" class="ts-marker" data-ts-id="' + loadedMarkersData[i]["id"] + '" data-ts-ln="' + i + '">' +
+                    '<a href="#" class="ts-marker" data-title="'+ loadedMarkersData[i]["title"] +'" data-image="'+ loadedMarkersData[i]["marker_image"] +'"  data-ts-id="' + loadedMarkersData[i]["id"] + '" data-ts-ln="' + i + '">' +
                     ((loadedMarkersData[i]["ribbon"] !== undefined) ? '<div class="ts-marker__feature">' + loadedMarkersData[i]["ribbon"] + '</div>' : "") +
                     ((loadedMarkersData[i]["title"] !== undefined) ? '<div class="ts-marker__title">' + loadedMarkersData[i]["title"] + '</div>' : "") +
                     /* ((loadedMarkersData[i]["price"] !== undefined && loadedMarkersData[i]["price"] > 0) ? '<div class="ts-marker__info">' + formatPrice(loadedMarkersData[i]["price"]) + '</div>' : "") + */
@@ -195,16 +195,20 @@
 
             // Open Popup on click
 
-            marker.on('click', function() {
+            marker.on('click', function(e) {
                 if (lastMarker && lastMarker._icon) {
                     $(lastMarker._icon.firstChild).removeClass("ts-hide-marker");
                 }
                 console.log('ffas')
+                console.log($(this._icon).find(".ts-marker").attr("data-image"))
                 openInfobox({
                     "id": $(this._icon).find(".ts-marker").attr("data-ts-id"),
                     "parentMarker": marker,
                     "i": i,
-                    "url": "assets/db/items.json"
+                    "url": "assets/db/items.json",
+                    "title" : $(this._icon).find(".ts-marker").attr("data-title"), 
+                    "image" : $(this._icon).find(".ts-marker").attr("data-image"), 
+
                 });
             });
 
@@ -237,6 +241,9 @@
             var parentMarker = parameters["parentMarker"];
             var id = parameters["id"];
             var infoboxHtml = document.createElement('div');
+            var title = parameters['title']
+            var image  = parameters['image']
+            
 
             // First create and HTML for infobox
             createInfoBoxHTML({
@@ -266,31 +273,28 @@
 
             $(".sidebar").addClass("sidebar-active")
 
-            let branchData = await loadฺSidebarData(id);
+            //let branchData = await loadฺSidebarData(id);
 
-            if (branchData.length > 0) {
-                branchData = branchData[0]
+    
                 /*   <span> <span class="opacity-50">Address</span> : Hatyai Songkhla </span> */
                 $(".sidebar-content").html(`    <div class="sidebar-banner ">
-                    <img  src="${branchData.marker_image}" alt="">
+                    <img  src="${image}" alt="">
                 </div>
                 
                 <div class="content px-3 flex flex-column gap-3 py-1"> 
                     <h3> Overview </h3>
-                    <span> <span class="opacity-50"> Branch </span> : ${branchData.title} </span> <br>
+                    <span> <span class="opacity-50"> Branch </span> : ${title} </span> <br>
                   
               
                     <hr>
 
-                    <a href="<?= base_url("/Dashboard/Branch/") ?>${branchData.id}" class="btn-next">
+                    <a href="<?= base_url("admin.php/DashboardView/Branch/") ?>${id}" class="btn-next">
                             See More Detail for this branch
                     </a>
 
                 </div>`)
 
-            } else {
-                $('.sidebar-content').html("<h1>Loading</h1>");
-            }
+          
 
             setTimeout(function() {
                 $(".ts-infobox[data-ts-id='" + id + "']").closest(".infobox-wrapper").addClass("ts-show");
