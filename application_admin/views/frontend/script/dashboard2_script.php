@@ -100,6 +100,9 @@
                         let branchSet = sessBranch.split(',')
                         results = results.filter((item) => branchSet.includes(item.id));
                         console.log(results)
+                        $(".loader").removeClass('d-flex')
+                        $(".loader").addClass('d-none')
+
                         if (typeof parameters !== "undefined" && parameters["formData"]) {
                             //loadFormData(parameters);
                         } else {
@@ -110,6 +113,7 @@
                         createMarkers(); // call function to create markers
                     },
                     error: function(e) {
+                        $(".loading-text").html(e)
                         console.log(e);
                     }
                 });

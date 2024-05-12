@@ -203,8 +203,18 @@
     <!--end Header-->
 
     <!-- HERO MAP
+
+    
     
     =================================================================================================================-->
+
+
+    <section class="loader w-100 d-flex flex-column align-items-center justify-content-center h-100 bg-white position-absolute" style="z-index:100">
+
+        <img style="width: 100%; height: 300px; object-fit: contain; " src="<?= base_url('/assets_admin/img/earth.gif') ?>" alt="">
+        <span class="loading-text"> Loading Branch data... </span>
+    </section>
+
     <section id="ts-hero" class=" mb-0">
 
         <!--Fullscreen mode-->
