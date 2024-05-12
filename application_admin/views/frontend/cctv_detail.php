@@ -42,23 +42,31 @@
         border-radius: 20px;
 
     }
-    .btn-search-date{
+
+    .btn-search-date {
         border-radius: 5px;
         padding: 10px;
         margin-bottom: 10px;
         border: none;
         transition: .5s;
     }
-    .btn-search-date:hover{
+
+    .btn-search-date:hover {
         background: #7c7c7c;
         transition: .5s;
     }
-    input{
+
+    input {
         border: none !important;
-        border-bottom: 1px solid black !important; 
+        border-bottom: 1px solid black !important;
     }
+
     .dt-container {
         overflow: auto;
+    }
+    .fadeEff{
+        opacity: 0%;
+        transition: .5s;
     }
 </style>
 
@@ -77,6 +85,12 @@
         <!-- MAIN ***************************************************************************************************-->
         <!--*********************************************************************************************************-->
 
+        <section class="loader w-100 d-flex flex-column align-items-center justify-content-center h-100 bg-white position-absolute" style="z-index:100">
+
+            <img style="width: 100%; height: 300px; object-fit: contain; " src="<?= base_url('/assets_admin/img/cctv.gif') ?>" alt="">
+            <span class="loading-text"> Loading Branch data... </span>
+        </section>
+
         <main id="ts-main">
 
             <section class="branch-image">
@@ -91,7 +105,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= base_url('admin.php/DashboardView') ?>">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="<?= base_url('admin.php/DashboardView/Map') ?>">Map</a></li>
-                            <li class="breadcrumb-item"><a href="<?= base_url('admin.php/DashboardView/branch/'.$branchID) ?>">branch </a></li>
+                            <li class="breadcrumb-item"><a href="<?= base_url('admin.php/DashboardView/branch/' . $branchID) ?>">branch </a></li>
                             <li class="breadcrumb-item active" aria-current="page">CCTV : <?= $typeID ?></li>
 
                         </ol>
@@ -182,11 +196,11 @@
                         =============================================================================================-->
                         <div class="col-md-5 col-lg-4">
 
-                       
+
 
                             <!--ACTIONS
                         =============================================================================================-->
-                          <!--   <section id="actions">
+                            <!--   <section id="actions">
                                 <h3>Action</h3>
                             
 
@@ -240,7 +254,7 @@
 
                             <!--LOCATION
                         =============================================================================================-->
-                          
+
 
                         </div>
                         <!--end col-md-4-->
@@ -249,12 +263,12 @@
                         =============================================================================================-->
                         <div class="col-md-7 col-lg-8">
 
-                        <section>
+                            <section>
                                 <h3>Search</h3>
                                 <div class="ts-box">
 
                                     <dl class="ts-description-list__line mb-0">
-                                    <h3> Date</h3>
+                                        <h3> Date</h3>
 
                                         <dd> <input type="text" class="col-12" placeholder="Start date" id="datepicker-start"> </dd>
                                         <dd> <input type="text" class="col-12" placeholder="End date" id="datepicker-end"></p>
@@ -265,19 +279,19 @@
                                     <h3>Exports</h3>
 
                                     <div class="d-flex justify-content-between">
-                                      <!--   <a href="#" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top" title="Add to favorites">
+                                        <!--   <a href="#" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top" title="Add to favorites">
                                             <i class="far fa-star"></i>
                                         </a>
  -->
-                                        <button  id="export-pdf" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top" title="Print">
+                                        <button id="export-pdf" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top" title="Print">
                                             <i class="fa-solid fa-file-pdf"></i>
                                         </button>
 
-                                        <button  id="export-excel" class="btn btn-light w-100 " data-toggle="tooltip" data-placement="top" title="Add to compare">
+                                        <button id="export-excel" class="btn btn-light w-100 " data-toggle="tooltip" data-placement="top" title="Add to compare">
                                             <i class="fa-solid fa-file-excel"></i>
                                         </button>
 
-                                       <!--  <a href="#" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top" title="Share property">
+                                        <!--  <a href="#" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top" title="Share property">
                                             <i class="fa fa-share-alt"></i>
                                         </a> -->
 
@@ -288,24 +302,24 @@
                             <!--QUICK INFO
                             =========================================================================================-->
                             <section class="overflow-hidden ">
-                            <h3>CCTV Data</h3>
-                                    <div class="ts-box">
+                                <h3>CCTV Data</h3>
+                                <div class="ts-box">
 
-                                      
-                                        <!--  <span style="font-size: 1.2rem;">CCTV List</span> -->
-                                        <table id="cctvReport" class="display no-wrap" style="width:100%">
+
+                                    <!--  <span style="font-size: 1.2rem;">CCTV List</span> -->
+                                    <table id="cctvReport" class="display no-wrap" style="width:100%">
                                         <thead>
                                             <tr>
-                                            <th>#</th>
-                                            <th>Time</th>
-                                            <th>Status</th>
+                                                <th>#</th>
+                                                <th>Time</th>
+                                                <th>Status</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody id="cctvData">
-                                        
-                                    </tbody>
-                                    <!--   <tfoot>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cctvData">
+
+                                        </tbody>
+                                        <!--   <tfoot>
                                         <tr>
                                             <th>Host ID</th>
                                             <th>Host</th>
@@ -314,18 +328,18 @@
                                           
                                         </tr>
                                     </tfoot> -->
-                                </table>
-                            </div>
+                                    </table>
+                                </div>
                             </section>
 
 
                             <!--MAP
                             =========================================================================================-->
-                     
+
 
                             <!--FEATURES
                             =========================================================================================-->
-                     <!--        <section id="features">
+                            <!--        <section id="features">
 
                                 <h3>Features</h3>
 
@@ -566,15 +580,13 @@
                 maxDate: '0'
             });
 
-            
-           
-          
+
+
+
         });
 
-        $("#export-excel").prop("disabled",true)
-        $("#export-pdf").prop("disabled",true)
-
-        
+        $("#export-excel").prop("disabled", true)
+        $("#export-pdf").prop("disabled", true)
     </script>
 </body>
 

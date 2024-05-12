@@ -273,9 +273,18 @@
                             $('.buttons-pdf').click()
                         })
 
+                        $(".loader").addClass('fadeEff')
+                        setTimeout(() => {
+                            $(".loader").addClass('d-none')
+                            $(".loader").removeClass('d-flex')
+                        }, 1000);
+
+
                     },
                     error: function(e) {
                         console.log(e);
+                        $(".loading-text").html(e)
+
                     }
                 });
             } else {
