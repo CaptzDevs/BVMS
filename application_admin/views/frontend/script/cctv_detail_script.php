@@ -303,6 +303,23 @@
 
         main();
 
+        
+        $('.reload-data-btn').click( async (e)=>{
+                $('.reload-data-btn').html(`Loading Data... `)
+                $('.reload-data-btn').prop("disabled",true)
+                $('.reload-data-btn').addClass("btn-load-disabled")
+
+
+                await loadData();
+                await loadCCTVData(dataBranch, 0, 0)
+
+                let d = new Date()
+                $('.reload-data-btn').removeClass("btn-load-disabled")
+                $('.reload-data-btn').html(`Reaload Data ( ${('0'+d.getHours()).slice(-2)}:${('0'+d.getMinutes()).slice(-2)}:${('0'+d.getSeconds()).slice(-2)} )`)
+                $('.reload-data-btn').prop("disabled",false)
+
+        })
+
         function formatDate(date) {
             date = date.split('/')
 

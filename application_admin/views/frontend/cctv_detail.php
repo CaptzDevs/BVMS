@@ -68,6 +68,10 @@
         opacity: 0%;
         transition: .5s;
     }
+    .btn-load-disabled{
+        background: gray !important;
+        opacity: 50% !important;
+    }
 </style>
 
 <body>
@@ -85,7 +89,7 @@
         <!-- MAIN ***************************************************************************************************-->
         <!--*********************************************************************************************************-->
 
-        <section class="loader w-100 d-flex flex-column align-items-center justify-content-center h-100 bg-white position-absolute" style="z-index:100">
+        <section class="loader w-100 d-flex flex-column align-items-center justify-content-center h-100 bg-white position-fixed" style="z-index:100">
 
             <img style="width: 100%; height: 300px; object-fit: contain; " src="<?= base_url('/assets_admin/img/cctv.gif') ?>" alt="">
             <span class="loading-text"> Loading Branch data... </span>
@@ -131,10 +135,13 @@
                         </div>
 
                         <!--Price-->
-                        <h3 class="is_active">
+                    <!--     <h3 class="is_active">
                             <span class="badge badge-primary p-2 font-weight-normal ts-shadow__sm">Active</span>
-                        </h3>
+                        </h3> -->
 
+                        <h3>
+                            <button class=" badge badge-primary p-2 font-weight-normal ts-shadow__sm reload-data-btn" style="cursor:pointer;">Reload Data</button>
+                        </h3>
                     </div>
 
                 </div>

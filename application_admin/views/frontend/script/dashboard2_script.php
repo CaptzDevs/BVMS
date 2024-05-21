@@ -292,7 +292,7 @@
               
                     <hr>
 
-                    <a href="<?= base_url("admin.php/DashboardView/Branch/") ?>${id}" class="btn-next">
+                    <a target="_blank" href="<?= base_url("admin.php/DashboardView/Branch/") ?>${id}" class="btn-next">
                             See More Detail for this branch
                     </a>
 
@@ -350,7 +350,7 @@
                 ((loadedMarkersData[i]["ribbon"] !== undefined) ? '<div class="ts-ribbon">' + loadedMarkersData[i]["ribbon"] + '</div>' : "") +
                 ((loadedMarkersData[i]["ribbon_corner"] !== undefined) ? '<div class="ts-ribbon-corner"><span>' + loadedMarkersData[i]["ribbon_corner"] + '</span></div>' : "") +
 
-                '<a href="' + loadedMarkersData[i]["url"] + '" class="ts-infobox__wrapper ts-black-gradient">' +
+                '<a  target="_blank" href="' + loadedMarkersData[i]["url"] + '" class="ts-infobox__wrapper ts-black-gradient">' +
                 ((loadedMarkersData[i]["badge"] !== undefined && loadedMarkersData[i]["badge"].length > 0) ? '<div class="badge badge-dark">' + loadedMarkersData[i]["badge"] + '</div>' : "") +
                 '<div class="ts-infobox__content">' +
                 '<figure class="ts-item__info">' +

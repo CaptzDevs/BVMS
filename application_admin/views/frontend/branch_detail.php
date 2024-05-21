@@ -64,6 +64,10 @@
     .dt-container {
         overflow: auto;
     }
+    .btn-load-disabled{
+        background: gray !important;
+        opacity: 50% !important;
+    }
 </style>
 
 <body>
@@ -120,7 +124,7 @@
 
                         <!--Price-->
                         <h3>
-                            <span class="badge badge-primary p-2 font-weight-normal ts-shadow__sm">Active</span>
+                            <button class=" badge badge-primary p-2 font-weight-normal ts-shadow__sm reload-data-btn" style="cursor:pointer;">Reload Data</button>
                         </h3>
 
                     </div>

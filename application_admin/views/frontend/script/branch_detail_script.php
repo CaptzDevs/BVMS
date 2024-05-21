@@ -164,11 +164,11 @@
 
                     $(".b_img").prop('src', data.marker_image.length > 36 ? data.marker_image : "https://picsum.photos/800/600/?blue=4")
 
-                    $("#map-location").data("data-ts-map-center-latitude", data.latitude)
+                  /*   $("#map-location").data("data-ts-map-center-latitude", data.latitude)
                     $("#map-location").data("data-ts-map-center-longitude", data.longitude)
 
                     document.title = "Branch : " + data.title
-                    mapRender(data.latitude, data.longitude);
+                    mapRender(data.latitude, data.longitude); */
 
                 },
                 error: function(e) {
@@ -308,6 +308,22 @@
         }
 
         main();
+
+        $('.reload-data-btn').click( async (e)=>{
+                $('.reload-data-btn').html(`Loading Data... `)
+                $('.reload-data-btn').prop("disabled",true)
+                $('.reload-data-btn').addClass("btn-load-disabled")
+
+
+
+                await loadData();
+                await loadCCTVData(dataBranch, startDate, endDate, true)
+                let d = new Date()
+                $('.reload-data-btn').removeClass("btn-load-disabled")
+                $('.reload-data-btn').html(`Reaload Data ( ${('0'+d.getHours()).slice(-2)}:${('0'+d.getMinutes()).slice(-2)}:${('0'+d.getSeconds()).slice(-2)} )`)
+                $('.reload-data-btn').prop("disabled",false)
+
+        })
 
         function formatDate(date) {
             date = date.split('/')
